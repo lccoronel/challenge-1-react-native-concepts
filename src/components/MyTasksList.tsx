@@ -1,10 +1,16 @@
 import React from 'react';
-import { FlatList, TouchableOpacity, View, Text, StyleSheet, FlatListProps } from 'react-native';
+import { FlatList, TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 
-function FlatListHeaderComponent() {
+interface FlatListHeaderComponentProps {
+  theme: boolean;
+}
+
+function FlatListHeaderComponent({ theme }: FlatListHeaderComponentProps) {
+  console.log(theme);
+  
   return (
     <View>
-      <Text style={styles.header}>Minhas tasks</Text>
+      <Text style={[styles.header, { color: theme ? '#fff': '#3D3D4D' }]}>Minhas tasks</Text>
     </View>
   )
 }
@@ -17,9 +23,10 @@ interface MyTasksListProps {
   }[];
   onPress: (id: number) => void;
   onLongPress: (id: number) => void;
+  theme: boolean;
 }
 
-export function MyTasksList({ tasks, onLongPress, onPress }: MyTasksListProps) {
+export function MyTasksList({ tasks, onLongPress, onPress, theme }: MyTasksListProps) {
   return (
     <FlatList
       data={tasks}
@@ -45,13 +52,13 @@ export function MyTasksList({ tasks, onLongPress, onPress }: MyTasksListProps) {
           </TouchableOpacity>
         )
       }}
-      ListHeaderComponent={<FlatListHeaderComponent />}
+      ListHeaderComponent={<FlatListHeaderComponent theme={theme} />}
       ListHeaderComponentStyle={{
         marginBottom: 20
       }}
       style={{
         marginHorizontal: 24,
-        marginTop: 32
+        marginTop: 32,
       }}
     />
   )

@@ -1,10 +1,22 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Switch } from 'react-native';
 
-export function Header() {
+interface HeaderProps {
+  theme: boolean;
+  changeTheme: () => void;
+}
+
+export function Header({ theme, changeTheme }: HeaderProps): JSX.Element {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+    <SafeAreaView style={{ backgroundColor: theme ? "#3E3E3E" : "#273FAD" }}>
+      <Switch 
+        thumbColor={theme ? "#fff" : "#273FAD"}
+        ios_backgroundColor="#fff"
+        onValueChange={() => changeTheme}
+        value={theme}
+        style={styles.switch}
+      />
+      <View style={[styles.header, { backgroundColor: theme ? "#3E3E3E" : "#273FAD" }]}>
         <Text style={styles.headerText}>to.</Text>
         <Text style={[styles.headerText, { fontFamily: 'Poppins-SemiBold' }]}>do</Text>
       </View>
@@ -13,8 +25,8 @@ export function Header() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#273FAD',
+  switch: {
+    alignSelf: "center"
   },
   header: {
     paddingBottom: 44,
